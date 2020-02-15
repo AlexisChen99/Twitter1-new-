@@ -12,6 +12,7 @@ class HomeTableViewController: UITableViewController {
 
     //var changes; let does not change
     var tweetArray = [NSDictionary]()
+    var numberOfTweet: Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,8 +24,23 @@ class HomeTableViewController: UITableViewController {
     
     //this func will load the info from tweet
     func loadTweet(){
-        //TODO
+        //variable
+        let myURL = "https://api.twitter.com/1.1/statuses/home_timeline.json"
+        let myParams = ["count": 10]
         
+        //pull the dictionary from the url
+        TwitterAPICaller.client?.getDictionariesRequest(url: myURL, parameters: myParams, success: { (tweets: [NSDictionary]) in
+            
+            //clean the array before append to it
+            self.tweetArray.removeAll()
+        
+            //is this a for each loop?
+            for tweet in tweets {
+                self.tweetArray.append(tweet)
+            }
+        }, failure: { (Error) in
+            print("could not retreive tweets")
+        })
         
         
         
